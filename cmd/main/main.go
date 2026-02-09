@@ -2,15 +2,15 @@ package main
 
 import (
 	"log"
-	"net/http"
-	"github.com/gin-gonic/gin"
-	"gorm.io/driver/mysql"
-	"github.com/Faiazzend/go-bookstore/pkg/routes"
 
+	"github.com/Faiazzend/go-bookstore/pkg/models"
+	"github.com/Faiazzend/go-bookstore/pkg/routes"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	router := gin.Default()
+	models.Init()
 	routes.RegisterBookStoreRoutes(router)
 	log.Fatal(router.Run(":8080"))
 
