@@ -1,17 +1,22 @@
 package routes
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/Faiazzend/go-bookstore/pkg/auth"
 	"github.com/Faiazzend/go-bookstore/pkg/controllers"
+	"github.com/Faiazzend/go-bookstore/pkg/middleware"
+	"github.com/gin-gonic/gin"
 )
 
 var RegisterBookStoreRoutes = func(c *gin.Engine) {
-	c.POST("/book", controllers.CreateBook)
-	c.GET("/book", controllers.GetAllBook)
-	c.GET("/book/:id", controllers.GetBookByID)
-	c.PUT("/book/:id", controllers.UpdateBook)
-	c.DELETE("/book/:id", controllers.DeleteBook)
+	c.POST("/login", controllers.Login)
 
-
+	authorized := c.Group("/")
+	authorized.Use(middleware.JWTAuth(auth.JWTSecret()))
+	{
+		authorized.POST("/book", controllers.CreateBook)
+		authorized.GET("/book", controllers.GetAllBook)
+		authorized.GET("/book/:id", controllers.GetBookByID)
+		authorized.PUT("/book/:id", controllers.UpdateBook)
+		authorized.DELETE("/book/:id", controllers.DeleteBook)
+	}
 }
-
