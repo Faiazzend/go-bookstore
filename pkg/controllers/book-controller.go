@@ -1,12 +1,10 @@
 package controllers
 
 import (
-	
+	"github.com/Faiazzend/go-bookstore/pkg/models"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
-	"github.com/Faiazzend/go-bookstore/pkg/models"
-
 )
 
 func CreateBook(c *gin.Context) {
@@ -67,9 +65,8 @@ func DeleteBook(c *gin.Context) {
 		})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H {
+	c.JSON(http.StatusOK, gin.H{
 		"message": "Book deleted successfully",
-
 	})
 
 }
@@ -96,7 +93,7 @@ func UpdateBook(c *gin.Context) {
 
 	bookDetails, db := models.GetBookById(bookID)
 
-    if db.RowsAffected == 0 {
+	if db.RowsAffected == 0 {
 		c.JSON(http.StatusNotFound, gin.H{
 			"error": "Book not found",
 		})
@@ -115,7 +112,5 @@ func UpdateBook(c *gin.Context) {
 	db.Save(&bookDetails)
 
 	c.JSON(http.StatusOK, bookDetails)
-
-	
 
 }
